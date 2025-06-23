@@ -25,9 +25,9 @@ def emotion_detector(text_to_analyse):
         response = requests.post(url, json=payload, headers=headers, timeout=10)
         response.raise_for_status()  # Raise an error for bad HTTP status codes
 
-        data = response.json()
+        formatted_response  = response.json()
 
-        emotions = data['emotionPredictions'][0]['emotion']
+        emotions = formatted_response ['emotionPredictions'][0]['emotion']
         dominant_emotion = max(emotions, key=emotions.get)
 
         return {
