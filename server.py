@@ -11,9 +11,13 @@ def sent_emotion_detector():
     # Pass the text to the emotion_detector function and store the response
     response = emotion_detector(text_to_analyze)
     
-    # Check for error responses
-    if 'error' in response:
-        return f"Error: {response['error']}"
+    # Handle error cases
+    if isinstance(response, str):  # Network/API errors
+        return response
+    
+    # Check for blank input (dominant_emotion is None)
+    if response['dominant_emotion'] is None:
+        return "Invalid text! Please try again!"
     
     # Extract emotion scores
     anger = response['anger']
@@ -39,4 +43,4 @@ def render_index_page():
     return render_template('index.html')
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=3000)
